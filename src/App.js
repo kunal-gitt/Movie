@@ -7,6 +7,9 @@ function App() {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, seterror] = useState(null);
+  const [title, settitle] = useState("");
+  const [opening_text, setopeningtext] = useState("");
+  const [release_date, setreleasedate] = useState("");
 
   const fetchMoviesHandler = useCallback(async () => {
     setIsLoading(true);
@@ -53,8 +56,44 @@ function App() {
     content = <p>Loading...</p>;
   }
 
+  const submithandler = (e) => {
+    e.preventDefault();
+    const NewMovieObj = {
+      title: title,
+      openingtext: opening_text,
+      releasedate: release_date,
+    };
+
+    console.log(NewMovieObj);
+  };
+
+  const titlechange = (e) => {
+    settitle(e.target.value);
+  };
+
+  const openingtext = (e) => {
+    setopeningtext(e.target.value);
+  };
+
+  const releasedate = (e) => {
+    setreleasedate(e.target.value);
+  };
+
   return (
     <React.Fragment>
+      <form onSubmit={submithandler}>
+        <label>Title</label>
+        <input type="text" onChange={titlechange}></input>
+        <br />
+        <label>Opening Text</label>
+        <input type="text" onChange={openingtext}></input>
+        <br />
+        <label>Release Date</label>
+        <input type="text" onChange={releasedate}></input>
+        <br />
+        <button>Add Movie</button>
+        <br />
+      </form>
       <section>
         <button onClick={fetchMoviesHandler}>Fetch Movies</button>
       </section>
